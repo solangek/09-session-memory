@@ -4,13 +4,23 @@
     <title><%= title %></title>
   </head>
   <body>
+
     <h1><%= title %></h1>
+
     <p>This example stores in session a variable to signal user's first visit. If the variable
     is found we know the user already visited the site, and if not we write in session the new variable.</p>
+
     <% if (views === 1) { %> <!-- this is EJS coding -->
+
       <p>It's your first visit!</p> <!-- this is HTML output -->
+
     <% } else { %>
+
       <p>You visited this page <%= views %> times</p>
+
     <% } %>
+
+    <h2>Global visitors count: <%= globalVisitorsCount %></h2>
+
   </body>
 </html>

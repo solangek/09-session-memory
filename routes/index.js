@@ -1,10 +1,18 @@
 var express = require('express');
 var router = express.Router();
 
+let globalVisitorsCount = 0;
 
-//Access the session as req.session to count visits
+/**
+ * GET home page.
+ * Counts the number of visitors to the site and displays it (globalVisitorsCount).
+ * Counts the user's visits to the site and displays it (per session).
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object.
+ */
 router.get('/',function(req,
                         res, next) {
+  globalVisitorsCount++;
 
   if (req.session.views) {
     req.session.views++;
@@ -14,7 +22,8 @@ router.get('/',function(req,
 
   res.render('index', {
     title: 'Visits',
-    views: req.session.views
+    views: req.session.views,
+    globalVisitorsCount: globalVisitorsCount
   });
 
 })
