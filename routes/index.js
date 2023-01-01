@@ -1,10 +1,14 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 let globalVisitorsCount = 0;
 
 /**
- * GET home page.
+ * Browse the URL http://localhost:3000/ from 2 different browsers.
+ * You will see that the globalVisitorsCount is incremented in both browsers.
+ * on the other hand the localVisitorsCount is incremented only in the browser
+ * since it is a session variable.
+ *
  * Counts the number of visitors to the site and displays it (globalVisitorsCount).
  * Counts the user's visits to the site and displays it (per session).
  * @param {Request} req - The request object.
@@ -14,20 +18,18 @@ router.get('/',function(req,
                         res, next) {
   globalVisitorsCount++;
 
-  if (req.session.views) {
-    req.session.views++;
+  if (req.session.localVisitorsCount) {
+    req.session.localVisitorsCount++;
   } else { // first time we access session.views
-    req.session.views = 1
+    req.session.localVisitorsCount = 1
   }
 
   res.render('index', {
     title: 'Visits',
-    views: req.session.views,
+    views: req.session.localVisitorsCount,
     globalVisitorsCount: globalVisitorsCount
   });
 
 })
-
-
 
 module.exports = router;
