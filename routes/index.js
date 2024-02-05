@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
+// it's a bad practice to use global variables in a web application
+// instead we should define a model (based on the MVC architecture)
+// and use a database to store the data
+// but for the sake of simplicity we will use a global variable.
 let globalVisitorsCount = 0;
 
 /**
@@ -14,16 +18,17 @@ let globalVisitorsCount = 0;
  * @param {Request} req - The request object.
  * @param {Response} res - The response object.
  */
-router.get('/',function(req,
-                        res, next) {
+router.get('/', function(req, res, next) {
   globalVisitorsCount++;
 
   if (req.session.localVisitorsCount) {
     req.session.localVisitorsCount++;
-  } else { // first time we access session.views
+  }
+  else { // first time we access session.views
     req.session.localVisitorsCount = 1
   }
 
+  // render the index.ejs file and pass the globalVisitorsCount and localVisitorsCount
   res.render('index', {
     title: 'Visits',
     views: req.session.localVisitorsCount,
